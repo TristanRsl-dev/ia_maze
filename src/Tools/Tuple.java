@@ -27,4 +27,8 @@ public class Tuple {
     public void setY(int y) {
         this.y = y;
     }
+
+    public boolean equals(Tuple tuple) {
+        return x == tuple.getX() && y == tuple.getY();
+    }
 }

@@ -3,6 +3,7 @@ package Tools;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 /**
  * Created by trist_000 on 05/12/2016.
@@ -25,13 +26,13 @@ public class FileManager {
         }
     }
 
-    public String read() {
+    public ArrayList<String> read() {
         BufferedReader br = new BufferedReader(fr);
-        String res = "";
+        ArrayList<String> res = new ArrayList<>();
         try {
             String line;
             while ((line = br.readLine()) != null)
-                res += line;
+                res.add(line);
             br.close();
         } catch (Exception e) {
             System.err.println("Impossible to read your file: " + e.toString());
