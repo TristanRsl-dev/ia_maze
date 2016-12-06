@@ -6,7 +6,7 @@ import javax.swing.*;
  * Created by trist_000 on 05/12/2016.
  */
 public class Window extends JFrame {
-    public static final int WIDTH = 700;
+    public static final int WIDTH = 450;
     public static final int HEIGHT = 500;
 
     public Window(GamePanel gp) {

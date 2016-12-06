@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.BLACK);
 
         map_panel = new Map();
+        map_panel.create("Resources/map.conf");
         this.add(map_panel);
         map_panel.setLocation(0, 0);
     }

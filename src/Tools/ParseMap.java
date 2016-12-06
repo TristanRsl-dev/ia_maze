@@ -12,21 +12,19 @@ import java.util.Random;
  */
 public class ParseMap {
     private String filename;
-    private int nb_monsters;
-    private int nb_holes;
     private Tuple player_pos;
 
     private ArrayList<MapElt> map_elts;
 
     private static ParseMap pmap;
 
-    private static ParseMap getInstance() {
+    public static ParseMap getInstance() {
         if (pmap == null)
             pmap = new ParseMap();
         return pmap;
     }
 
-    public ParseMap() {
+    private ParseMap() {
         filename = "";
         map_elts = new ArrayList<>();
     }
@@ -37,23 +35,27 @@ public class ParseMap {
         ArrayList<String> map_infos = fm.read();
         fm.close();
 
-        nb_monsters = Integer.parseInt(map_infos.get(0));
-        nb_holes = Integer.parseInt(map_infos.get(1));
+        MapInfo map_model = MapInfo.getInstance();
+
+        map_model.setMonsters(Integer.parseInt(map_infos.get(0)));
+        map_model.setHoles(Integer.parseInt(map_infos.get(1)));
         player_pos = new Tuple(Integer.parseInt(map_infos.get(2)),
                 Integer.parseInt(map_infos.get(3)));
 
-        MapInfo map_model = MapInfo.getInstance();
-
         map_elts.add(new MapElt(player_pos, "player"));
-        for (int i = 0; i < nb_monsters; ++i)
+        for (int i = 0; i < map_model.getMonsters(); ++i)
             map_elts.add(getRdmPos(map_model.getSize().getX(), "monster"));
-        for (int i = 0; i < nb_holes; ++i)
+        for (int i = 0; i < map_model.getHoles(); ++i)
             map_elts.add(getRdmPos(map_model.getSize().getX(), "hole"));
         map_elts.add(getRdmPos(map_model.getSize().getX(), "out"));
     }
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public ArrayList<MapElt> getMap() {
+        return map_elts;
     }
 
     private MapElt getRdmPos(int x, String type) {
