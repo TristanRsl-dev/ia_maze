@@ -15,6 +15,15 @@ public class Player {
     private int pic_width;
     private int pic_height;
 
+    public enum Direction {
+        n,
+        s,
+        w,
+        e
+    }
+
+    private Direction dir;
+
     public static Player getInstance() {
         if (player == null)
             player = new Player();
@@ -25,6 +34,7 @@ public class Player {
         pos = new Tuple(0, 0);
         pic_width = 0;
         pic_height = 0;
+        dir = Direction.s;
     }
 
     public Tuple getPos() {
@@ -43,6 +53,10 @@ public class Player {
         return pic_height;
     }
 
+    public Direction getDir() {
+        return dir;
+    }
+
     public void setPos(Tuple pos) {
         this.pos = pos;
     }
@@ -57,5 +71,9 @@ public class Player {
 
     public void setPicH(int pic_height) {
         this.pic_height = pic_height;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
     }
 }
