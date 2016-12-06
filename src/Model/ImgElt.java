@@ -3,9 +3,9 @@ package Model;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by trist_000 on 05/12/2016.
+ * Created by trist_000 on 06/12/2016.
  */
-public class Gate {
+public class ImgElt {
     private BufferedImage pic;
     private int pich;
     private int picw;

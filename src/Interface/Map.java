@@ -1,6 +1,5 @@
 package Interface;
 
-import Game.GameManager;
 import Model.*;
 import Tools.ParseMap;
 
@@ -20,9 +19,11 @@ public class Map extends JPanel {
     private Player player;
     private ParseMap parse_map;
 
-    private Monster monster;
-    private Hole hole;
-    private Gate gate;
+    private ImgElt monster;
+    private ImgElt hole;
+    private ImgElt gate;
+    private ImgElt smoke;
+    private ImgElt wind;
 
     private ArrayList tiles_pics;
 
@@ -36,9 +37,11 @@ public class Map extends JPanel {
         player = Player.getInstance();
         parse_map = ParseMap.getInstance();
 
-        monster = new Monster();
-        hole = new Hole();
-        gate = new Gate();
+        monster = new ImgElt();
+        hole = new ImgElt();
+        gate = new ImgElt();
+        smoke = new ImgElt();
+        wind = new ImgElt();
 
         tiles_pics = new ArrayList();
         LoadPic();
@@ -73,8 +76,16 @@ public class Map extends JPanel {
         monster.setPic(scalePic(monster.getPic(), monster.getPicW(), monster.getPicH(), scale));
 
         // Scale hole
+        scale = 1 / ((float) hole.getPicW() / size_tile);
+        hole.setPicW((int) (hole.getPicW() * scale));
+        hole.setPicH((int) (hole.getPicH() * scale));
+        hole.setPic(scalePic(hole.getPic(), hole.getPicW(), hole.getPicH(), scale));
 
         // Scale gate
+        scale = 1 / ((float) gate.getPicW() / size_tile);
+        gate.setPicW((int) (gate.getPicW() * scale));
+        gate.setPicH((int) (gate.getPicH() * scale));
+        gate.setPic(scalePic(gate.getPic(), gate.getPicW(), gate.getPicH(), scale));
 
         ArrayList<MapElt> map_elts = parse_map.getMap();
         for (int i = 0; i < map_elts.size(); ++i) {
@@ -82,50 +93,37 @@ public class Map extends JPanel {
                 g2.drawImage(monster.getPic(), map_elts.get(i).getPos().getX() * size_tile,
                         map_elts.get(i).getPos().getY() * size_tile, null);
             else if (map_elts.get(i).getType().equals("hole"))
-                g2.drawImage((BufferedImage) tiles_pics.get(2), map_elts.get(i).getPos().getX() * size_tile,
+                g2.drawImage(hole.getPic(), map_elts.get(i).getPos().getX() * size_tile,
                         map_elts.get(i).getPos().getY() * size_tile, null);
             else if (map_elts.get(i).getType().equals("out"))
-                g2.drawImage((BufferedImage) tiles_pics.get(3), map_elts.get(i).getPos().getX() * size_tile,
+                g2.drawImage(gate.getPic(), map_elts.get(i).getPos().getX() * size_tile,
                         map_elts.get(i).getPos().getY() * size_tile, null);
         }
 
-       /*for (int i = 0; i < 5; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                Tile tile = (Tile)list.get(j).get(i);
-                if (tile.getType() == TileType.TileTypes.wall) {
-                    for (int k = 0; k < 150; ++k)
-                        g2.drawLine(i*aspiro.getBox().width + k, j*aspiro.getBox().height,
-                                i*aspiro.getBox().width + k, (j + 1)*aspiro.getBox().height);
-                }
-                else if (tile.getType() == TileType.TileTypes.dirt) {
-                    g2.drawImage((BufferedImage)tiles_pics.get(0), i*aspiro.getBox().width,
-                            j*aspiro.getBox().height, null);
-                    Color c = g2.getColor();
-                    g2.setColor(Color.RED);
-                    g2.drawString(Integer.toString(tile.getQuantity()), i*aspiro.getBox().width + 25,
-                            j*aspiro.getBox().height + 15);
-                    g2.setColor(c);
-                }
-                else if (tile.getType() == TileType.TileTypes.jewelry) {
-                    g2.drawImage((BufferedImage)tiles_pics.get(1), i*aspiro.getBox().width,
-                            j*aspiro.getBox().height, null);
-                }
-                else if (tile.getType() == TileType.TileTypes.dirtjewelry) {
-                    g2.drawImage((BufferedImage)tiles_pics.get(0), i*aspiro.getBox().width,
-                            j*aspiro.getBox().height, null);
-                    g2.drawImage((BufferedImage)tiles_pics.get(1), i*aspiro.getBox().width,
-                            j*aspiro.getBox().height, null);
-                    Color c = g2.getColor();
-                    g2.setColor(Color.RED);
-                    g2.drawString(Integer.toString(tile.getQuantity()), i*aspiro.getBox().width + 25,
-                            j*aspiro.getBox().height + 15);
-                    g2.setColor(c);
-                }
-            }
-        }*/
+        // Scale smoke
+        scale = 1 / ((float) smoke.getPicW() / size_tile);
+        smoke.setPicW((int) (smoke.getPicW() * scale));
+        smoke.setPicH((int) (smoke.getPicH() * scale));
+        smoke.setPic(scalePic(smoke.getPic(), smoke.getPicW(), smoke.getPicH(), scale));
+
+        // Scale wind
+        scale = 1 / ((float) wind.getPicW() / size_tile);
+        wind.setPicW((int) (wind.getPicW() * scale));
+        wind.setPicH((int) (wind.getPicH() * scale));
+        wind.setPic(scalePic(wind.getPic(), wind.getPicW(), wind.getPicH(), scale));
+
+        ArrayList<MapElt> map_sensors = parse_map.getMapSensors();
+        for (int i = 0; i < map_sensors.size(); ++i) {
+            if (map_sensors.get(i).getType().equals("smoke"))
+                g2.drawImage(smoke.getPic(), map_sensors.get(i).getPos().getX() * size_tile,
+                    map_sensors.get(i).getPos().getY() * size_tile, null);
+            else if (map_sensors.get(i).getType().equals("wind"))
+                g2.drawImage(wind.getPic(), map_sensors.get(i).getPos().getX() * size_tile,
+                    map_sensors.get(i).getPos().getY() * size_tile, null);
+        }
 
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.drawImage(player.getPic(), player.getPos().getX(), player.getPos().getY(), null);
+        g2.drawImage(player.getPic(), player.getPos().getX() * size_tile, player.getPos().getY() * size_tile, null);
     }
 
     private void LoadPic() {
@@ -134,6 +132,8 @@ public class Map extends JPanel {
             tiles_pics.add(ImageIO.read(getClass().getClassLoader().getResourceAsStream("zelda.png")));
             tiles_pics.add(ImageIO.read(getClass().getClassLoader().getResourceAsStream("hole.png")));
             tiles_pics.add(ImageIO.read(getClass().getClassLoader().getResourceAsStream("gate.png")));
+            tiles_pics.add(ImageIO.read(getClass().getClassLoader().getResourceAsStream("smoke.png")));
+            tiles_pics.add(ImageIO.read(getClass().getClassLoader().getResourceAsStream("wind.png")));
 
             player.setPic((BufferedImage) tiles_pics.get(0));
             player.setPicW(player.getPic().getWidth());
@@ -142,6 +142,22 @@ public class Map extends JPanel {
             monster.setPic((BufferedImage) tiles_pics.get(1));
             monster.setPicW(monster.getPic().getWidth());
             monster.setPicH(monster.getPic().getHeight());
+
+            hole.setPic((BufferedImage) tiles_pics.get(2));
+            hole.setPicW(hole.getPic().getWidth());
+            hole.setPicH(hole.getPic().getHeight());
+
+            gate.setPic((BufferedImage) tiles_pics.get(3));
+            gate.setPicW(gate.getPic().getWidth());
+            gate.setPicH(gate.getPic().getHeight());
+
+            smoke.setPic((BufferedImage) tiles_pics.get(4));
+            smoke.setPicW(smoke.getPic().getWidth());
+            smoke.setPicH(smoke.getPic().getHeight());
+
+            wind.setPic((BufferedImage) tiles_pics.get(5));
+            wind.setPicW(wind.getPic().getWidth());
+            wind.setPicH(wind.getPic().getHeight());
         } catch (Exception e) {
             System.err.println("Impossible to load pictures: " + e.toString());
         }
