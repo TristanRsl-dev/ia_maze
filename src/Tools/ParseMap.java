@@ -47,18 +47,22 @@ public class ParseMap {
         Player tmp_player = Player.getInstance();
         tmp_player.setPos(player_pos);
 
-        map_elts.add(new MapElt(player_pos, "player"));
-        for (int i = 0; i < map_model.getMonsters(); ++i) {
-            MapElt elt = getRdmPos(map_model.getSize().getX(), "monster");
-            map_elts.add(elt);
-            fillAdj(elt, map_model);
-        }
-        for (int i = 0; i < map_model.getHoles(); ++i) {
-            MapElt elt = getRdmPos(map_model.getSize().getX(), "hole");
-            map_elts.add(elt);
-            fillAdj(elt, map_model);
-        }
-        map_elts.add(getRdmPos(map_model.getSize().getX(), "out"));
+        fillArray(map_model);
+    }
+
+    public void update() {
+        map_elts = new ArrayList<>();
+        map_sensors = new ArrayList<>();
+        MapInfo map_info = MapInfo.getInstance();
+        Tuple map_size = map_info.getSize();
+        map_size.setX(map_size.getX() + 1);
+        map_size.setY(map_size.getY() + 1);
+        map_info.setSize(map_size);
+
+        map_info.setMonsters(map_info.getMonsters() + 1);
+        map_info.setHoles(map_info.getHoles() + 1);
+
+        fillArray(map_info);
     }
 
     public void setFilename(String filename) {
@@ -111,5 +115,21 @@ public class ParseMap {
 
         if (y + 1 < map_info.getSize().getY())
             map_sensors.add(new MapElt(new Tuple(x, y + 1), type));
+    }
+
+    private void fillArray(MapInfo map_model) {
+        map_elts.add(new MapElt(player_pos, "player"));
+        for (int i = 0; i < map_model.getMonsters(); ++i) {
+            MapElt elt = getRdmPos(map_model.getSize().getX(), "monster");
+            map_elts.add(elt);
+            fillAdj(elt, map_model);
+        }
+        for (int i = 0; i < map_model.getHoles(); ++i) {
+            MapElt elt = getRdmPos(map_model.getSize().getX(), "hole");
+            map_elts.add(elt);
+            fillAdj(elt, map_model);
+        }
+        map_elts.add(getRdmPos(map_model.getSize().getX(), "out"));
+
     }
 }

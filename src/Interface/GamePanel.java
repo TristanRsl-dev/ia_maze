@@ -21,6 +21,10 @@ public class GamePanel extends JPanel {
         map_panel.setLocation(0, 0);
     }
 
+    public void update() {
+        map_panel.update();
+    }
+
     public void repaintGame() {
         map_panel.repaint();
     }

@@ -52,6 +52,10 @@ public class Map extends JPanel {
         parse_map.create();
     }
 
+    public void update() {
+        parse_map.update();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

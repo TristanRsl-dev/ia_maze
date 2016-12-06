@@ -15,6 +15,7 @@ public class GameManager extends Thread {
     @Override
     public void run() {
         while (true) {
+            gp.update();
             gp.repaintGame();
             try {
                 Thread.sleep(1000);
