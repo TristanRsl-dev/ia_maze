@@ -8,18 +8,23 @@ import Model.Player;
  */
 public class GameManager extends Thread {
     private GamePanel gp;
-    private Move move;
+    private Actions actions;
+    private Player player;
 
     public GameManager(GamePanel gp) {
         this.gp = gp;
-        move = new Move();
+        actions = new Actions();
+        player = Player.getInstance();
     }
 
     @Override
     public void run() {
         while (true) {
-            //gp.update();
-            //move.move(Player.Direction.s);
+            if (player.getIsOut()) {
+                gp.update();
+                player.setIsOut();
+            }
+            //actions.actions(Player.Direction.s);
             gp.repaintGame();
             try {
                 Thread.sleep(1000);

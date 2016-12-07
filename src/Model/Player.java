@@ -14,6 +14,7 @@ public class Player {
     private BufferedImage pic;
     private int pic_width;
     private int pic_height;
+    private boolean is_out;
 
     public enum Direction {
         n,
@@ -34,6 +35,7 @@ public class Player {
         pos = new Tuple(0, 0);
         pic_width = 0;
         pic_height = 0;
+        is_out = false;
         dir = Direction.s;
     }
 
@@ -57,6 +59,10 @@ public class Player {
         return dir;
     }
 
+    public boolean getIsOut() {
+        return is_out;
+    }
+
     public void setPos(Tuple pos) {
         this.pos = pos;
     }
@@ -75,5 +81,9 @@ public class Player {
 
     public void setDir(Direction dir) {
         this.dir = dir;
+    }
+
+    public void setIsOut() {
+        is_out = !is_out;
     }
 }

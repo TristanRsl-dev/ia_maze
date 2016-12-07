@@ -1,16 +1,18 @@
 package Game;
 
+import Model.MapElt;
 import Model.MapInfo;
 import Model.Player;
+import Tools.ParseMap;
 import Tools.Tuple;
 
 /**
  * Created by trist_000 on 06/12/2016.
  */
-public class Move {
+public class Actions {
     private Player player;
 
-    public Move() {
+    public Actions() {
         player = Player.getInstance();
     }
 
@@ -44,5 +46,17 @@ public class Move {
                 }
                 break;
         }
+
+        player.setDir(dir);
+    }
+
+    public void shoot(Tuple pos_monster) {
+        ParseMap map = ParseMap.getInstance();
+        map.getMap().remove(new MapElt(pos_monster, "monster"));
+        Perform.incRock();
+    }
+
+    public void getout() {
+        player.setIsOut();
     }
 }

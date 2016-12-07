@@ -21,5 +21,6 @@ public class Perform {
 
     public static void incRock() {
         rock++;
+        changePerf(-10);
     }
 }
