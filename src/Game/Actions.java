@@ -57,6 +57,13 @@ public class Actions {
     }
 
     public void getout() {
+        MapInfo map = MapInfo.getInstance();
         player.setIsOut();
+        Perform.changePerf(10 * map.getSize().getX());
+    }
+
+    public void die() {
+        MapInfo map = MapInfo.getInstance();
+        Perform.changePerf(-10 * map.getSize().getX());
     }
 }
