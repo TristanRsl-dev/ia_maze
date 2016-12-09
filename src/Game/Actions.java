@@ -59,4 +59,35 @@ public class Actions {
     public void getout() {
         player.setIsOut();
     }
+
+    public String nextAction(){
+        String action, type="";
+        Tuple pos = player.getPos();
+        ParseMap map = ParseMap.getInstance();
+
+        for (MapElt elt : map.getMapSensors()
+             ) {
+            if (pos.getY() == elt.getPos().getY() && pos.getX() == elt.getPos().getX())
+                type+=elt.getType();
+        }
+
+        switch (type) {
+            case "out":
+                action="getout";
+
+            default:
+                 action="move";
+
+            case "smoke":
+                action="shoot";
+
+            case "wind":
+                action="move";
+
+            case "smokewind":
+                action="shoot";
+        }
+
+        return action;
+    }
 }

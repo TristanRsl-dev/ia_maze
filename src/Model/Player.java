@@ -1,8 +1,10 @@
 package Model;
 
+import Tools.ParseMap;
 import Tools.Tuple;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  * Created by trist_000 on 05/12/2016.
@@ -15,6 +17,7 @@ public class Player {
     private int pic_width;
     private int pic_height;
     private boolean is_out;
+    public ArrayList<MapElt> map;
 
     public enum Direction {
         n,

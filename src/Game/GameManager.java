@@ -24,6 +24,7 @@ public class GameManager extends Thread {
                 gp.update();
                 player.setIsOut();
             }
+            actions.nextAction();
             //actions.actions(Player.Direction.s);
             gp.repaintGame();
             try {
