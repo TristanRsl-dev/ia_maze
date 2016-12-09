@@ -32,8 +32,8 @@ public class GameManager extends Thread {
                 player.setIsOut();
             }
             else {
-            // int a = interpret(nextAction());
-                int result_interpret = interpret("move s");
+             //int a = interpret(nextAction());
+                int result_interpret = interpret(actions.nextAction());
                 switch (result_interpret) {
                     case 1:
                         actions.shoot(new Tuple(1, 1));

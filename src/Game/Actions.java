@@ -74,25 +74,33 @@ public class Actions {
 
         for (MapElt elt : map.getMapSensors()
              ) {
-            if (pos.getY() == elt.getPos().getY() && pos.getX() == elt.getPos().getX())
-                type+=elt.getType();
+            if (pos.getY() == elt.getPos().getY() && pos.getX() == elt.getPos().getX()) {
+                type += elt.getType();
+                //player.map.add(elt);
+            }
         }
 
         switch (type) {
             case "out":
                 action="getout";
-
+                break;
             default:
-                 action="move";
+            {
+                action="move ";
+                break;
+            }
 
             case "smoke":
                 action="shoot";
+                break;
 
             case "wind":
-                action="move";
+                action="move ";
+                break;
 
             case "smokewind":
                 action="shoot";
+                break;
         }
 
         return action;
